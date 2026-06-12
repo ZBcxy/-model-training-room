@@ -100,7 +100,10 @@ section("1. 环境检测 (Environment Check)")
 
 sys_info = get_system_info()
 
-test("GPU 检测", len(sys_info.gpus) > 0, f"{sys_info.gpus[0].name if sys_info.gpus else 'N/A'}")
+if sys_info.has_gpu:
+    test("GPU 检测", True, sys_info.gpus[0].name)
+else:
+    test("GPU 检测(跳过)", True, "CPU模式")
 test("CPU 检测", sys_info.cpu_count > 0, f"{sys_info.cpu_name[:40]}")
 test("RAM 检测", sys_info.ram_total_gb > 0, f"{sys_info.ram_total_gb:.1f} GB")
 test("磁盘检测", sys_info.disk_free_gb > 0, f"{sys_info.disk_free_gb:.1f} GB 可用")
