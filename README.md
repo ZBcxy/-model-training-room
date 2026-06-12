@@ -1,5 +1,10 @@
 # 🏠 模型训练室 · Model Training Room
 
+[![Test](https://github.com/ZBcxy/-model-training-room/actions/workflows/test.yml/badge.svg)](https://github.com/ZBcxy/-model-training-room/actions)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Models](https://img.shields.io/badge/models-26-orange)](backend/model_cards.py)
+
 > 下载 · 准备数据 · 微调 · 导出 —— 一站式模型微调工具
 >
 > Download · Prepare Data · Fine-tune · Export — All-in-one model fine-tuning tool
