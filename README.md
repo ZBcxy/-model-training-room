@@ -11,6 +11,18 @@
 
 ---
 
+### 📖 教学文档
+
+| 文档 | 内容 |
+|------|------|
+| [🚀 5分钟快速演示](docs/DEMO.md) | 从零到部署，全程终端命令 |
+| [📘 使用教程](docs/TUTORIAL.md) | 5步完成模型微调 |
+| [📊 训练报告](docs/TRAINING_REPORT.md) | 六组对照实验 · 学术论文 |
+| [🖥️ GPU配置指南](docs/GPU_SETUP.md) | 从装机到训练 |
+| [🤝 贡献指南](CONTRIBUTING.md) | 参与开发 |
+
+---
+
 ## 📊 实验验证报告
 
 我们在消费级 GPU（RTX 3060 12GB）上用 **10,310 条中文数据** 微调了 **Qwen2.5-1.5B-Instruct**，Loss 从 1.68 降到 1.12，仅用 1 小时 9 分钟。详情见 **[完整训练报告 →](docs/TRAINING_REPORT.md)**
@@ -304,6 +316,16 @@ Model-Training-Room/
 │   └── experiments/           # 实验记录与 checkpoint
 └── .venv/                     # 虚拟环境
 ```
+
+### 📖 教学文档
+
+| 文档 | 内容 |
+|------|------|
+| [🚀 5分钟快速演示](docs/DEMO.md) | 从零到部署，全程终端命令 |
+| [📘 使用教程](docs/TUTORIAL.md) | 5步完成模型微调 |
+| [📊 训练报告](docs/TRAINING_REPORT.md) | 六组对照实验 · 学术论文 |
+| [🖥️ GPU配置指南](docs/GPU_SETUP.md) | 从装机到训练 |
+| [🤝 贡献指南](CONTRIBUTING.md) | 参与开发 |
 
 ## 功能详解
 
