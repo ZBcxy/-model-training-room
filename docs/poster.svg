@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="1200" height="1600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="1600" fill="url(#bg)"/>
+
+  <!-- 顶部装饰线 -->
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+
+  <!-- 主标题 -->
+  <text x="600" y="160" text-anchor="middle" font-family="sans-serif" font-size="72" font-weight="bold" fill="white">模型训练室</text>
+  <text x="600" y="240" text-anchor="middle" font-family="sans-serif" font-size="36" fill="#94a3b8">Model Training Room</text>
+
+  <!-- 副标题 -->
+  <text x="600" y="320" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#64748b">
+    下载 · 准备数据 · 微调 · 导出 —— 一站式模型微调工具
+  </text>
+
+  <!-- 分隔线 -->
+  <line x1="200" y1="360" x2="1000" y2="360" stroke="#334155" stroke-width="1"/>
+
+  <!-- 核心卖点 -->
+  <g transform="translate(0, 420)">
+    <rect x="100" y="0" width="300" height="180" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="250" y="60" text-anchor="middle" font-size="48">📦</text>
+    <text x="250" y="110" text-anchor="middle" font-size="22" font-weight="bold" fill="white">26 个热门模型</text>
+    <text x="250" y="145" text-anchor="middle" font-size="15" fill="#94a3b8">Qwen · Llama · DeepSeek</text>
+    <text x="250" y="168" text-anchor="middle" font-size="15" fill="#94a3b8">ChatGLM · Mistral · 更多</text>
+
+    <rect x="450" y="0" width="300" height="180" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="600" y="60" text-anchor="middle" font-size="48">🧪</text>
+    <text x="600" y="110" text-anchor="middle" font-size="22" font-weight="bold" fill="white">一键微调</text>
+    <text x="600" y="145" text-anchor="middle" font-size="15" fill="#94a3b8">LoRA / QLoRA / 全参</text>
+    <text x="600" y="168" text-anchor="middle" font-size="15" fill="#94a3b8">智能参数推荐</text>
+
+    <rect x="800" y="0" width="300" height="180" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="950" y="60" text-anchor="middle" font-size="48">🚀</text>
+    <text x="950" y="110" text-anchor="middle" font-size="22" font-weight="bold" fill="white">GGUF 导出</text>
+    <text x="950" y="145" text-anchor="middle" font-size="15" fill="#94a3b8">一键量化 + Ollama 部署</text>
+    <text x="950" y="168" text-anchor="middle" font-size="15" fill="#94a3b8">4GB 显存就能跑</text>
+  </g>
+
+  <!-- 实验数据 -->
+  <g transform="translate(0, 650)">
+    <text x="600" y="0" text-anchor="middle" font-size="28" font-weight="bold" fill="white">📊 实验验证</text>
+
+    <rect x="125" y="30" width="950" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <!-- 表头 -->
+    <text x="180" y="68" font-size="16" font-weight="bold" fill="#94a3b8">实验</text>
+    <text x="340" y="68" font-size="16" font-weight="bold" fill="#94a3b8">数据量</text>
+    <text x="500" y="68" font-size="16" font-weight="bold" fill="#94a3b8">数据质量</text>
+    <text x="660" y="68" font-size="16" font-weight="bold" fill="#94a3b8">Loss</text>
+    <text x="800" y="68" font-size="16" font-weight="bold" fill="#94a3b8">耗时</text>
+    <text x="950" y="68" font-size="16" font-weight="bold" fill="#94a3b8">效果</text>
+    <line x1="160" y1="78" x2="1050" y2="78" stroke="#334155" stroke-width="1"/>
+    <!-- v0.1 -->
+    <text x="180" y="105" font-size="15" fill="white">v0.1</text>
+    <text x="340" y="105" font-size="15" fill="white">500 条</text>
+    <text x="500" y="105" font-size="15" fill="#ef4444">❌ 混搭模板</text>
+    <text x="660" y="105" font-size="15" fill="white">2.09</text>
+    <text x="800" y="105" font-size="15" fill="white">1.8 分钟</text>
+    <text x="950" y="105" font-size="15" fill="#ef4444">答非所问</text>
+    <!-- v0.2 -->
+    <text x="180" y="135" font-size="15" fill="white">v0.2</text>
+    <text x="340" y="135" font-size="15" fill="white">500 条</text>
+    <text x="500" y="135" font-size="15" fill="#22c55e">✅ 手工匹配</text>
+    <text x="660" y="135" font-size="15" fill="white">0.11</text>
+    <text x="800" y="135" font-size="15" fill="white">2.1 分钟</text>
+    <text x="950" y="135" font-size="15" fill="#eab308">准确但窄</text>
+
+    <!-- v1.0 高亮 -->
+    <rect x="125" y="155" width="950" height="32" rx="8" fill="#6366f1" fill-opacity="0.15"/>
+    <text x="180" y="177" font-size="16" font-weight="bold" fill="#818cf8">v1.0</text>
+    <text x="340" y="177" font-size="16" font-weight="bold" fill="#818cf8">10,310 条</text>
+    <text x="500" y="177" font-size="16" font-weight="bold" fill="#22c55e">✅ 真实标注</text>
+    <text x="660" y="177" font-size="16" font-weight="bold" fill="#22c55e">1.12</text>
+    <text x="800" y="177" font-size="16" font-weight="bold" fill="#22c55e">69 分钟</text>
+    <text x="950" y="177" font-size="16" font-weight="bold" fill="#22c55e">✅ 准确丰富</text>
+
+    <!-- 结论 -->
+    <rect x="125" y="210" width="950" height="50" rx="8" fill="#1e293b"/>
+    <text x="600" y="240" text-anchor="middle" font-size="18" font-weight="bold" fill="#22c55e">
+      🏆 核心发现: 数据质量 > 数据数量 > 模型大小 ｜ LoRA 仅需 4GB 显存
+    </text>
+  </g>
+
+  <!-- 功能亮点 -->
+  <g transform="translate(0, 940)">
+    <text x="600" y="0" text-anchor="middle" font-size="28" font-weight="bold" fill="white">✨ 功能亮点</text>
+
+    <rect x="75" y="40" width="520" height="100" rx="8" fill="#1e293b"/>
+    <text x="100" y="72" font-size="20" fill="#818cf8">🧠 智能匹配</text>
+    <text x="100" y="100" font-size="14" fill="#94a3b8">输入模型名 → 自动推荐训练参数、Chat Template、注意事项</text>
+
+    <rect x="605" y="40" width="520" height="100" rx="8" fill="#1e293b"/>
+    <text x="630" y="72" font-size="20" fill="#818cf8">🪄 AI 数据生成</text>
+    <text x="630" y="100" font-size="14" fill="#94a3b8">写几个示例 → 自动扩充到 1000+ 条 · OpenAI / Claude / Ollama</text>
+
+    <rect x="75" y="160" width="520" height="100" rx="8" fill="#1e293b"/>
+    <text x="100" y="192" font-size="20" fill="#818cf8">📊 实时监控</text>
+    <text x="100" y="220" font-size="14" fill="#94a3b8">Loss 曲线 + GPU 状态 + 自动刷新 · 训练过程中实时查看</text>
+
+    <rect x="605" y="160" width="520" height="100" rx="8" fill="#1e293b"/>
+    <text x="630" y="192" font-size="20" fill="#818cf8">🐳 Docker 支持</text>
+    <text x="630" y="220" font-size="14" fill="#94a3b8">docker compose up 一键启动 · 支持 GPU 直通</text>
+  </g>
+
+  <!-- 底部 CTA -->
+  <g transform="translate(0, 1280)">
+    <rect x="250" y="0" width="700" height="80" rx="40" fill="url(#accent)"/>
+    <text x="600" y="48" text-anchor="middle" font-size="28" font-weight="bold" fill="white">
+      github.com/ZBcxy/-model-training-room
+    </text>
+  </g>
+
+  <!-- 底部信息 -->
+  <g transform="translate(0, 1420)">
+    <text x="600" y="0" text-anchor="middle" font-size="16" fill="#64748b">MIT License · Python 3.10+ · NVIDIA GPU · 开源免费</text>
+    <text x="600" y="30" text-anchor="middle" font-size="14" fill="#475569">支持模型: Qwen · Llama · DeepSeek · ChatGLM · Mistral · Gemma · Yi · InternLM · 等 26 个</text>
+  </g>
+
+  <!-- 版本标签 -->
+  <rect x="980" y="1220" width="160" height="40" rx="20" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="1060" y="1246" text-anchor="middle" font-size="18" font-weight="bold" fill="#818cf8">v0.3.0</text>
+</svg>
