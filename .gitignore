@@ -1,0 +1,70 @@
+# ============================================================
+# 模型训练室 .gitignore
+# 确保开发环境中的缓存、模型、运行时不会被打包到发布中
+# ============================================================
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 模型文件（体积巨大，用户自行下载）
+data/models/
+data/exports/ollama-models/
+data/exports/*.gguf
+
+# 实验记录（包含训练checkpoint，体积大）
+data/experiments/*
+data/experiments.db
+!data/experiments/.gitkeep
+
+# 数据集（用户自行准备）
+data/datasets/*
+!data/datasets/.gitkeep
+!data/datasets/dataset_info.json
+
+# 搜索缓存
+data/search_cache.json
+data/model_cards.json
+
+# 第三方工具（通过 auto_setup.py 安装，不可提交）
+tools/ollama_extract/
+tools/bin/
+tools/lib/
+tools/ollama.tgz
+tools/llama.cpp/
+LLaMA-Factory/
+
+# Ollama 运行时文件
+.ollama/
+
+# 临时测试文件
+/tmp/
+*.log
+training.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 发布快照（CI产物）
+data/release_snapshot.json
+
+# 保留目录结构
+!data/models/.gitkeep
+!data/exports/.gitkeep
+!data/.gitkeep
