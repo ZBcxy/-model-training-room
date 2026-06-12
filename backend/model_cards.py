@@ -358,12 +358,228 @@ DEFAULT_CARDS = [
         "recommended_datasets": ["alpaca-zh", "belle-zh", "firefly-zh"],
         "tags": ["中文", "对话", "工具调用", "国产"],
     },
+
+    # ---- Qwen2.5-Coder 系列 ----
+    {
+        "id": "qwen25-coder-7b",
+        "patterns": ["qwen2.5-coder-7b", "qwen/qwen2.5-coder-7b-instruct"],
+        "display_name": "Qwen2.5-Coder-7B-Instruct",
+        "family": "qwen2", "chat_template": "chatml",
+        "params_b": 7.0, "size_gb": 14.5, "license": "🟢 Apache 2.0",
+        "description": "阿里代码专用模型，编程任务能力突出",
+        "sources": [{"platform":"modelscope","id":"Qwen/Qwen2.5-Coder-7B-Instruct"},{"platform":"huggingface","id":"Qwen/Qwen2.5-Coder-7B-Instruct"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":40,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["代码补全和生成能力出色","支持 FIM（Fill-in-the-Middle）","ChatML 模板"] ,
+        "recommended_datasets":["code-alpaca"],
+        "tags":["代码","编程","FIM","中文"],
+    },
+    {
+        "id": "qwen25-14b-instruct",
+        "patterns": ["qwen2.5-14b", "qwen/qwen2.5-14b-instruct"],
+        "display_name": "Qwen2.5-14B-Instruct",
+        "family": "qwen2", "chat_template": "chatml",
+        "params_b": 14.0, "size_gb": 29.0, "license": "🟢 Apache 2.0",
+        "description": "Qwen2.5 中杯，14B参数，性能接近大模型水平",
+        "sources": [{"platform":"modelscope","id":"Qwen/Qwen2.5-14B-Instruct"},{"platform":"huggingface","id":"Qwen/Qwen2.5-14B-Instruct"}],
+        "training": {"qlora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":1,"max_seq_length":1024},"lora":{"min_vram_gb":20,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":2,"max_seq_length":2048},"full":{"min_vram_gb":60,"lr":5e-5,"batch_size":1,"max_seq_length":2048}},
+        "notes":["性能接近 32B 级别","中文能力顶尖","需要较高显存"],
+        "recommended_datasets":["alpaca-zh","belle-zh","firefly-zh"],
+        "tags":["中文","高性能","对话"],
+    },
+
+    # ---- ChatGLM4 系列 ----
+    {
+        "id": "chatglm4-9b",
+        "patterns": ["chatglm4", "chatglm4-9b", "thudm/glm-4-9b-chat"],
+        "display_name": "GLM-4-9B-Chat",
+        "family": "chatglm", "chat_template": "chatglm3",
+        "params_b": 9.0, "size_gb": 18.0, "license": "🟢 Apache 2.0",
+        "description": "智谱 GLM-4 最新开源版，9B 参数，中文和工具调用能力出色",
+        "sources": [{"platform":"modelscope","id":"ZhipuAI/glm-4-9b-chat"},{"platform":"huggingface","id":"THUDM/glm-4-9b-chat"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":42,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["需要 trust_remote_code=True","ChatGLM 特殊 tokenizer","工具调用/Agent 能力出色","支持 128K 上下文"],
+        "recommended_datasets":["alpaca-zh","belle-zh"],
+        "tags":["中文","工具调用","Agent","长文本"],
+    },
+
+    # ---- Baichuan 系列 ----
+    {
+        "id": "baichuan2-7b-chat",
+        "patterns": ["baichuan2-7b", "baichuan-inc/baichuan2-7b-chat"],
+        "display_name": "Baichuan2-7B-Chat",
+        "family": "baichuan", "chat_template": "baichuan",
+        "params_b": 7.0, "size_gb": 14.5, "license": "🟢 Baichuan",
+        "description": "百川智能出品，中文理解和生成能力扎实",
+        "sources": [{"platform":"modelscope","id":"baichuan-inc/Baichuan2-7B-Chat"},{"platform":"huggingface","id":"baichuan-inc/Baichuan2-7B-Chat"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":40,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["Baichuan Chat Template","需要 trust_remote_code=True","中文优化出色","百川在医疗和金融领域有专项优化"],
+        "recommended_datasets":["alpaca-zh","belle-zh"],
+        "tags":["中文","对话","国产"],
+    },
+    {
+        "id": "baichuan2-13b-chat",
+        "patterns": ["baichuan2-13b", "baichuan-inc/baichuan2-13b-chat"],
+        "display_name": "Baichuan2-13B-Chat",
+        "family": "baichuan", "chat_template": "baichuan",
+        "params_b": 13.0, "size_gb": 26.0, "license": "🟢 Baichuan",
+        "description": "百川 13B 版本，性能更强",
+        "sources": [{"platform":"modelscope","id":"baichuan-inc/Baichuan2-13B-Chat"},{"platform":"huggingface","id":"baichuan-inc/Baichuan2-13B-Chat"}],
+        "training": {"qlora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":1,"max_seq_length":1024},"lora":{"min_vram_gb":20,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":2,"max_seq_length":2048},"full":{"min_vram_gb":55,"lr":5e-5,"batch_size":1,"max_seq_length":2048}},
+        "notes":["13B 参数，性能接近大模型","中文表现优秀","需要较高显存"],
+        "recommended_datasets":["alpaca-zh","belle-zh","firefly-zh"],
+        "tags":["中文","高性能","国产"],
+    },
+
+    # ---- MiniCPM 系列 ----
+    {
+        "id": "minicpm-2b",
+        "patterns": ["minicpm", "minicpm-2b", "openbmb/minicpm-2b"],
+        "display_name": "MiniCPM-2B",
+        "family": "minicpm", "chat_template": "chatml",
+        "params_b": 2.0, "size_gb": 4.0, "license": "🟢 Apache 2.0",
+        "description": "面壁智能轻量模型，2B 参数，性能接近 7B 模型",
+        "sources": [{"platform":"modelscope","id":"OpenBMB/MiniCPM-2B"},{"platform":"huggingface","id":"openbmb/MiniCPM-2B"}],
+        "training": {"qlora":{"min_vram_gb":4,"lora_rank":8,"lora_alpha":16,"lr":5e-4,"batch_size":4,"max_seq_length":1024},"lora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":8,"max_seq_length":2048},"full":{"min_vram_gb":12,"lr":1e-4,"batch_size":4,"max_seq_length":2048}},
+        "notes":["超轻量，性能惊人","手机端部署友好","微调速度快"],
+        "recommended_datasets":["alpaca-zh","dolly-zh"],
+        "tags":["轻量","入门","中文","端侧部署"],
+    },
+
+    # ---- Phi 系列 ----
+    {
+        "id": "phi-4-mini",
+        "patterns": ["phi-4", "phi-4-mini", "microsoft/phi-4-mini"],
+        "display_name": "Phi-4-Mini",
+        "family": "phi", "chat_template": "phi4",
+        "params_b": 3.8, "size_gb": 7.6, "license": "🟢 MIT",
+        "description": "微软 Phi 系列，小模型高性能，推理能力强",
+        "sources": [{"platform":"huggingface","id":"microsoft/Phi-4-mini-instruct"}],
+        "training": {"qlora":{"min_vram_gb":4,"lora_rank":8,"lora_alpha":16,"lr":5e-4,"batch_size":4,"max_seq_length":1024},"lora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":8,"max_seq_length":2048},"full":{"min_vram_gb":16,"lr":1e-4,"batch_size":4,"max_seq_length":2048}},
+        "notes":["英文和推理能力极强","中文能力弱于国产模型","小尺寸高性能"],
+        "recommended_datasets":[],
+        "tags":["轻量","推理","英文"],
+    },
+
+    # ---- Orion 系列 ----
+    {
+        "id": "orion-14b-chat",
+        "patterns": ["orion", "orion-14b", "orionstarai/orion-14b-chat"],
+        "display_name": "Orion-14B-Chat",
+        "family": "orion", "chat_template": "chatml",
+        "params_b": 14.0, "size_gb": 28.0, "license": "🟢 Apache 2.0",
+        "description": "猎户星空出品，中文表现优异，多语言支持",
+        "sources": [{"platform":"modelscope","id":"OrionStarAI/Orion-14B-Chat"},{"platform":"huggingface","id":"OrionStarAI/Orion-14B-Chat"}],
+        "training": {"qlora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":1,"max_seq_length":1024},"lora":{"min_vram_gb":20,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":2,"max_seq_length":2048},"full":{"min_vram_gb":60,"lr":5e-5,"batch_size":1,"max_seq_length":2048}},
+        "notes":["中文多任务能力强","ChatML 模板","罕见支持日语和韩语"],
+        "recommended_datasets":["alpaca-zh","belle-zh"],
+        "tags":["中文","多语言","高性能"],
+    },
+
+    # ---- XuanYuan 系列 ----
+    {
+        "id": "xuanyuan-6b",
+        "patterns": ["xuanyuan", "xuanyuan-6b", "duguangxuanyuan"],
+        "display_name": "XuanYuan-6B",
+        "family": "baichuan", "chat_template": "chatml",
+        "params_b": 6.0, "size_gb": 12.0, "license": "🟢 Apache 2.0",
+        "description": "度小满金融大模型，金融领域专项优化",
+        "sources": [{"platform":"modelscope","id":"Duxiaoman-DI/XuanYuan-6B"},{"platform":"huggingface","id":"xyz-nlp/XuanYuan2.0"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":14,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":32,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["金融领域专项优化","Baichuan 架构","适合金融客服、风控等场景"],
+        "recommended_datasets":[],
+        "tags":["金融","中文","垂直领域"],
+    },
+
+    # ---- Llama 3.2 系列 ----
+    {
+        "id": "llama32-3b",
+        "patterns": ["llama-3.2-3b", "meta-llama/llama-3.2-3b-instruct"],
+        "display_name": "Llama-3.2-3B-Instruct",
+        "family": "llama", "chat_template": "llama3",
+        "params_b": 3.0, "size_gb": 6.0, "license": "🟢 Llama 3.2",
+        "description": "Meta 轻量多语言模型，3B参数，移动端友好",
+        "sources": [{"platform":"huggingface","id":"meta-llama/Llama-3.2-3B-Instruct"}],
+        "training": {"qlora":{"min_vram_gb":4,"lora_rank":8,"lora_alpha":16,"lr":5e-4,"batch_size":4,"max_seq_length":1024},"lora":{"min_vram_gb":8,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":8,"max_seq_length":2048},"full":{"min_vram_gb":14,"lr":1e-4,"batch_size":4,"max_seq_length":2048}},
+        "notes":["支持多语言","Llama3 Chat Template","轻量适合入门"],
+        "recommended_datasets":[],
+        "tags":["多语言","轻量","入门"],
+    },
+
+    # ---- Mixtral 系列 ----
+    {
+        "id": "mixtral-8x7b",
+        "patterns": ["mixtral", "mixtral-8x7b", "mistralai/mixtral-8x7b-instruct"],
+        "display_name": "Mixtral-8x7B-Instruct-v0.1",
+        "family": "mistral", "chat_template": "mistral",
+        "params_b": 46.7, "size_gb": 93.0, "license": "🟢 Apache 2.0",
+        "description": "Mistral AI MoE 模型，8专家×7B，英文能力超强",
+        "sources": [{"platform":"huggingface","id":"mistralai/Mixtral-8x7B-Instruct-v0.1"}],
+        "training": {"qlora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":1,"max_seq_length":1024},"lora":{"min_vram_gb":32,"lora_rank":64,"lora_alpha":128,"lr":5e-5,"batch_size":1,"max_seq_length":2048},"full":{"min_vram_gb":999,"lr":2e-5,"batch_size":1,"max_seq_length":512}},
+        "notes":["MoE架构，46.7B参数但每token只激活12.9B","英文顶级","QLoRA在24GB可跑"],
+        "recommended_datasets":[],
+        "tags":["MoE","英文","高性能"],
+    },
+
+    # ---- Gemma 2 系列 (补充 9B/27B) ----
+    {
+        "id": "gemma-2-9b",
+        "patterns": ["gemma-2-9b", "google/gemma-2-9b-it"],
+        "display_name": "Gemma-2-9B-Instruct",
+        "family": "gemma", "chat_template": "gemma",
+        "params_b": 9.0, "size_gb": 18.0, "license": "🟢 Gemma",
+        "description": "Google Gemma2 9B，英文表现接近更大模型",
+        "sources": [{"platform":"huggingface","id":"google/gemma-2-9b-it"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":42,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["英文能力非常强","Gemma Chat Template","比 2B 版本强很多"],
+        "recommended_datasets":[],
+        "tags":["英文","对话","Google"],
+    },
+
+    # ---- CodeLlama 系列 ----
+    {
+        "id": "codellama-7b",
+        "patterns": ["codellama", "codellama-7b", "codellama/codellama-7b-instruct"],
+        "display_name": "CodeLlama-7B-Instruct",
+        "family": "llama", "chat_template": "llama2",
+        "params_b": 7.0, "size_gb": 14.0, "license": "🟢 Llama 2",
+        "description": "Meta 代码专用模型，编程任务表现优异",
+        "sources": [{"platform":"huggingface","id":"codellama/CodeLlama-7b-Instruct-hf"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":40,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["代码生成和补全专长","支持多种编程语言","FIM填空模式"],
+        "recommended_datasets":["code-alpaca"],
+        "tags":["代码","编程","FIM"],
+    },
+
+    # ---- DeepSeek-R1 系列 ----
+    {
+        "id": "deepseek-r1-distill-qwen-7b",
+        "patterns": ["deepseek-r1", "deepseek-r1-distill-qwen", "deepseek-ai/deepseek-r1-distill-qwen-7b"],
+        "display_name": "DeepSeek-R1-Distill-Qwen-7B",
+        "family": "qwen2", "chat_template": "chatml",
+        "params_b": 7.0, "size_gb": 14.5, "license": "🟢 MIT",
+        "description": "DeepSeek-R1 蒸馏版，通过蒸馏获得推理链能力",
+        "sources": [{"platform":"huggingface","id":"deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"}],
+        "training": {"qlora":{"min_vram_gb":6,"lora_rank":16,"lora_alpha":32,"lr":2e-4,"batch_size":2,"max_seq_length":2048},"lora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":4,"max_seq_length":4096},"full":{"min_vram_gb":40,"lr":5e-5,"batch_size":2,"max_seq_length":4096}},
+        "notes":["具备推理链(Chain-of-Thought)能力","蒸馏自 DeepSeek-R1","Qwen架构，ChatML模板"],
+        "recommended_datasets":[],
+        "tags":["推理","蒸馏","中文"],
+    },
+
+    # ---- Qwen2.5-72B 系列 ----
+    {
+        "id": "qwen25-72b",
+        "patterns": ["qwen2.5-72b", "qwen/qwen2.5-72b-instruct"],
+        "display_name": "Qwen2.5-72B-Instruct",
+        "family": "qwen2", "chat_template": "chatml",
+        "params_b": 72.0, "size_gb": 144.0, "license": "🟢 Apache 2.0",
+        "description": "Qwen2.5 旗舰版，72B参数，中文能力顶级",
+        "sources": [{"platform":"modelscope","id":"Qwen/Qwen2.5-72B-Instruct"},{"platform":"huggingface","id":"Qwen/Qwen2.5-72B-Instruct"}],
+        "training": {"qlora":{"min_vram_gb":16,"lora_rank":32,"lora_alpha":64,"lr":1e-4,"batch_size":1,"max_seq_length":512},"lora":{"min_vram_gb":40,"lora_rank":64,"lora_alpha":128,"lr":5e-5,"batch_size":1,"max_seq_length":1024},"full":{"min_vram_gb":999,"lr":2e-5,"batch_size":1,"max_seq_length":512}},
+        "notes":["⛔ 消费级显卡无法全参微调","QLoRA在24GB A5000可跑","云端A100推荐"],
+        "recommended_datasets":[],
+        "tags":["旗舰","中文","大模型","云端"],
+    },
 ]
-
-
-# ============================================================
-# Card Matching
-# ============================================================
 
 def load_cards() -> list[dict]:
     """加载所有适配卡片（优先从 JSON 文件，fallback 到默认库）"""

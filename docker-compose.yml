@@ -1,0 +1,52 @@
+# ============================================================
+# 模型训练室 — Docker Compose 一键部署
+#
+# 启动:
+#   docker compose up -d
+#
+# 查看日志:
+#   docker compose logs -f
+#
+# 停止:
+#   docker compose down
+# ============================================================
+
+version: "3.8"
+
+services:
+  app:
+    image: model-training-room:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: model-training-room
+    ports:
+      - "7860:7860"
+    volumes:
+      # 持久化数据：模型、数据集、实验记录保存在宿主机
+      - ./data:/app/data
+    environment:
+      # LLaMA-Factory 在镜像内的路径
+      - MTR_LLAMA_FACTORY_PATH=/opt/llama-factory
+      # Ollama 宿主机地址（如果本机有 Ollama）
+      - MTR_OLLAMA_HOST=http://host.docker.internal:11434
+      # 数据目录
+      - MTR_MODELS_DIR=/app/data/models
+      - MTR_DATASETS_DIR=/app/data/datasets
+      - MTR_EXPERIMENTS_DIR=/app/data/experiments
+      - MTR_EXPORTS_DIR=/app/data/exports
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    # 首次启动等待模型加载
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s

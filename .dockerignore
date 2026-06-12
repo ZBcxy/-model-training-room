@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# 数据（运行时挂载，不打包进镜像）
+data/
+
+# 第三方工具（Dockerfile 内安装）
+tools/llama.cpp/
+LLaMA-Factory/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# 开发文件
+*.log
+.claude/
