@@ -1,6 +1,6 @@
 [project]
 name = "model-training-room"
-version = "0.3.0"
+version = "1.0.0"
 description = "本地化大模型微调一站式工具 — 下载·准备数据·微调·导出"
 readme = "README.md"
 license = { text = "MIT" }

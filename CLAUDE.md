@@ -192,11 +192,15 @@
 - [x] Docker 镜像（Dockerfile + compose）
 - [x] 前端重构（4页极简风格）
 
-### 🔄 v0.6 — 当前（进行中）
-- [ ] 多模型跨架构对比（Qwen vs ChatGLM vs Llama 同数据训）
-- [ ] 在线 Demo 环境（HuggingFace Space / 云端）
+### ✅ v1.0 — 正式发布（已完成）
+- [x] PyPI 发布
+- [x] 完整文档体系
+- [x] 六组实验验证
+- [x] 生产级代码质量
 
-### 📋 v0.7+ — 计划
+### 📋 v1.1+ — 计划
+- [ ] 多模型跨架构对比
+- [ ] HuggingFace Space 在线 Demo
 - [ ] React + FastAPI 正式版前端
 - [ ] 自动超参搜索（Optuna 集成）
 - [ ] 模型卡片扩展到 50+
