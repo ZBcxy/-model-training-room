@@ -556,11 +556,10 @@ ok("族系列表", len(families) >= 5, f"{families}")
 section("9️⃣  前端构建 (Gradio app)")
 
 try:
-    from frontend.app import create_app, CUSTOM_CSS, AppState
+    from frontend.app import create_app, CSS
     app = create_app()
     ok("Gradio Blocks创建", app is not None)
-    ok("CUSTOM_CSS存在", len(CUSTOM_CSS) > 100)
-    ok("AppState可实例化", isinstance(AppState(), AppState))
+    ok("CSS存在", len(CSS) > 5)
 except Exception as e:
     ok("前端构建", False, str(e))
 

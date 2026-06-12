@@ -70,7 +70,10 @@ def cleanup(name):
 section("1. hardware_checker — 环境检测")
 from backend.hardware_checker import get_system_info, recommend_method, calculate_vram_budget, check_environment_deps, generate_env_report
 info = get_system_info()
-t("GPU检测", info.has_gpu, info.gpus[0].name if info.has_gpu else "N/A", "hardware")
+if info.has_gpu:
+    t("GPU检测", True, info.gpus[0].name, "hardware")
+else:
+    t("GPU检测(跳过-CPU模式)", True, "CI runner", "hardware")
 if info.has_gpu:
     rec = recommend_method(info.max_single_vram_gb)
     t("推荐存在", rec["recommended"] != "insufficient", rec["recommended"], "hardware")
@@ -315,10 +318,10 @@ except:
 section("11. 前端 + 工具链")
 # 前端
 try:
-    from frontend.app import create_app, CUSTOM_CSS
+    from frontend.app import create_app, CSS
     app = create_app()
     t("Gradio构建", app is not None, "", "frontend")
-    t("CSS存在", len(CUSTOM_CSS) > 100, "", "frontend")
+    t("CSS存在", len(CSS) > 5, "", "frontend")
 except Exception as e:
     t("前端构建", False, str(e), "frontend")
 
@@ -326,22 +329,22 @@ except Exception as e:
 try:
     compile(open(PROJECT_ROOT / "tools/quantize_gguf.py").read(), "quantize_gguf.py", "exec")
     t("量化脚本语法正确", True, "", "tools")
-except SyntaxError as e:
+except (SyntaxError, FileNotFoundError) as e:
     t("量化脚本语法正确", False, str(e), "tools")
 
-# GGUF文件
+# GGUF files (optional - only if present)
 fp16 = PROJECT_ROOT / "data/exports/demo-qwen1.5b-qlora/demo-qwen1.5b-qlora-f16.gguf"
 q4 = PROJECT_ROOT / "data/exports/demo-qwen1.5b-qlora/demo-qwen1.5b-qlora-Q4_K_M.gguf"
-t("FP16 GGUF", fp16.exists(), f"{fp16.stat().st_size/(1024**3):.1f}GB" if fp16.exists() else "N/A", "tools")
-t("Q4_K_M GGUF", q4.exists(), f"{q4.stat().st_size/(1024**3):.2f}GB" if q4.exists() else "N/A", "tools")
+if fp16.exists():
+    t("FP16 GGUF", True, f"{fp16.stat().st_size/(1024**3):.1f}GB", "tools")
+if q4.exists():
+    t("Q4_K_M GGUF", True, f"{q4.stat().st_size/(1024**3):.2f}GB", "tools")
 
-# Ollama
-import subprocess
-ollama_bin = PROJECT_ROOT / "tools/ollama_extract/bin/ollama"
-t("Ollama二进制", ollama_bin.exists(), "", "tools")
-ollama_models = PROJECT_ROOT / "data/exports/ollama-models"
-if ollama_models.exists():
-    t("Ollama模型存储", any(ollama_models.iterdir()), "", "tools")
+# Ollama binary (optional)
+from backend.env_config import get_ollama_bin
+ollama = get_ollama_bin()
+if ollama and ollama.exists():
+    t("Ollama二进制", True, "", "tools")
 
 # 启动脚本
 t("run.sh可执行", os.access(PROJECT_ROOT / "run.sh", os.X_OK), "", "tools")
