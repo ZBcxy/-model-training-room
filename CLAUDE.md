@@ -179,23 +179,30 @@
 - [x] CONTRIBUTING.md + Issue 模板
 - [x] 宣传海报 SVG
 
-### 🔄 v0.4 — 当前（进行中）
-- [ ] 多模型对比训练（Qwen vs Llama vs ChatGLM）
-- [ ] 对比实验报告 + 发布
+### ✅ v0.4 — 数据+实验（已完成）
+- [x] 数据生成路径 B（文档→问答对）
+- [x] 数据生成路径 C（自然语言→搜数据集）
+- [x] 多模型/多数据量对比训练（6组实验）
+- [x] 学术报告 v2（含数据缩放实验分析）
+- [x] 5分钟演示教程（docs/DEMO.md）
 
-### 📋 v0.5 — 计划
-- [ ] pip 发布到 PyPI
-- [ ] 录 Demo 视频
-- [ ] 网站/文档站
-- [ ] 更多模型卡片（目标 50+）
+### ✅ v0.5 — 发布（已完成）
+- [x] pip 发布到 PyPI（model-training-room v0.3.0）
+- [x] README 教学文档跳转
+- [x] Docker 镜像（Dockerfile + compose）
+- [x] 前端重构（4页极简风格）
 
-### 🔮 远期
-- [ ] React 前端替换 Gradio
+### 🔄 v0.6 — 当前（进行中）
+- [ ] 多模型跨架构对比（Qwen vs ChatGLM vs Llama 同数据训）
+- [ ] 在线 Demo 环境（HuggingFace Space / 云端）
+
+### 📋 v0.7+ — 计划
+- [ ] React + FastAPI 正式版前端
+- [ ] 自动超参搜索（Optuna 集成）
+- [ ] 模型卡片扩展到 50+
+- [ ] 内置数据集库扩充到 30+
+- [ ] 离线模式开关
 - [ ] 多 GPU / DeepSpeed 支持
-- [ ] 自动超参搜索（Optuna）
-- [ ] ONNX 导出
-- Docker 一键部署
-- React + FastAPI 正式版前端
 
 ---
 
