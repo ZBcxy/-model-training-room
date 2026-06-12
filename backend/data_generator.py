@@ -326,6 +326,191 @@ def _extract_json_array(text: str) -> list | None:
 # Quick Test
 # ============================================================
 
+# ============================================================
+# Path B: Document → Q&A pairs
+# ============================================================
+
+DOC_TO_QA_PROMPT = """你是一个数据标注专家。请根据以下文档内容，生成 {count} 条问答对训练数据。
+
+文档内容：
+{document}
+
+要求：
+1. 每条包含 instruction（问题）和 output（回答）
+2. 回答要基于文档内容，准确详细
+3. 问题要覆盖文档的不同方面
+4. 只输出 JSON 数组：[{{"instruction":"...","output":"..."}}, ...]
+"""
+
+
+def generate_from_document(
+    document: str,
+    target_count: int = 50,
+    backend: str = "ollama",
+    api_key: str = "",
+    model: str = "",
+    quality_check: bool = True,
+) -> GenerationResult:
+    """
+    路径 B：上传文档/知识库 → AI 自动生成问答对。
+
+    Args:
+        document: 文档文本内容（支持 TXT/Markdown，PDF需先提取文本）
+        target_count: 目标生成数量
+        backend/api_key/model: 同 generate_data()
+        quality_check: 是否做质量过滤
+    """
+    if len(document) < 50:
+        return GenerationResult(success=False, error="文档太短，至少需要50个字符")
+
+    # Truncate document if too long
+    max_doc_len = 8000
+    if len(document) > max_doc_len:
+        document = document[:max_doc_len] + "\n...(文档已截断)"
+
+    result = GenerationResult()
+    start_time = time.time()
+
+    try:
+        client = create_client(backend, api_key, model)
+    except Exception as e:
+        result.error = str(e)
+        return result
+
+    all_data = []
+    batch_size = min(20, target_count)
+    remaining = target_count
+
+    while remaining > 0:
+        n = min(batch_size, remaining)
+        prompt = DOC_TO_QA_PROMPT.format(count=n, document=document)
+
+        try:
+            response = client.generate(prompt, max_tokens=4096)
+            result.api_calls += 1
+            batch = _extract_json_array(response)
+            if batch:
+                valid = [item for item in batch
+                         if isinstance(item, dict) and "instruction" in item and "output" in item
+                         and len(item.get("output", "")) > 10]
+                all_data.extend(valid)
+                remaining -= len(valid)
+        except Exception as e:
+            break
+
+    converted = convert_to_sharegpt(all_data)
+
+    if quality_check and converted:
+        clean_result = clean_dataset(converted, {"remove_duplicates": True, "min_length": 15})
+        converted = clean_result["cleaned_data"]
+
+    result.data = converted[:target_count]
+    result.count = len(result.data)
+    result.success = result.count > 0
+    result.duration_seconds = time.time() - start_time
+
+    if result.count == 0:
+        result.error = "未能从文档生成有效问答对，请检查文档内容或更换引擎"
+
+    return result
+
+
+# ============================================================
+# Path C: Natural language → search datasets
+# ============================================================
+
+def search_datasets_by_description(
+    description: str,
+    target_count: int = 5000,
+    sources: list[str] | None = None,
+) -> dict:
+    """
+    路径 C：用自然语言描述需求 → 自动搜索匹配的数据集。
+
+    在 ModelScope 和 HuggingFace 上搜索数据集，返回匹配结果。
+
+    Returns:
+        {
+            "datasets": [{"name":..., "source":..., "size":..., "description":...}],
+            "recommendation": str,
+        }
+    """
+    if sources is None:
+        sources = ["modelscope", "huggingface"]
+
+    results = []
+
+    # Search ModelScope datasets
+    if "modelscope" in sources:
+        try:
+            from modelscope.msdatasets import MsDataset
+            # Try known dataset IDs based on description keywords
+            keywords = description.lower()
+            candidates = []
+
+            if any(kw in keywords for kw in ["对话", "chat", "conversation"]):
+                candidates += [
+                    ("damo/nlp_instruction_tuning_dataset_collection", "NLP指令微调合集"),
+                    ("iic/Chinese-Alpaca-Data", "Chinese Alpaca 数据"),
+                ]
+            if any(kw in keywords for kw in ["代码", "code", "编程"]):
+                candidates += [
+                    ("codefuse-ai/CodeExercise-Python-27k", "Python 代码练习 27K"),
+                ]
+            if any(kw in keywords for kw in ["翻译", "translation"]):
+                candidates += [
+                    ("damo/nlp_opus100_zh-en_dataset", "OPUS100 中英翻译"),
+                ]
+            if any(kw in keywords for kw in ["客服", "customer", "service"]):
+                candidates += [
+                    ("damo/nlp_convai_text2sql_dataset", "对话转SQL"),
+                ]
+
+            # Default: Chinese instruction datasets
+            candidates += [
+                ("AI-ModelScope/alpaca-gpt4-data-zh", "Alpaca-GPT4 中文 52K"),
+                ("swift/self-cognition", "Self-cognition 数据"),
+            ]
+
+            for ds_id, ds_name in candidates:
+                results.append({
+                    "name": ds_name,
+                    "source": "modelscope",
+                    "id": ds_id,
+                    "match": "keyword",
+                })
+
+        except Exception:
+            pass
+
+    # Search HuggingFace datasets
+    if "huggingface" in sources:
+        try:
+            import huggingface_hub
+            api = huggingface_hub.HfApi()
+            hf_results = api.list_datasets(search=description, limit=10)
+            for ds in hf_results:
+                results.append({
+                    "name": ds.id,
+                    "source": "huggingface",
+                    "id": ds.id,
+                    "match": "hf_search",
+                })
+        except Exception:
+            pass
+
+    recommendation = (
+        f"找到 {len(results)} 个匹配的数据集。"
+        f"建议选择数据量在 {target_count} 条左右的数据集。"
+    ) if results else "未找到匹配的数据集，请尝试更具体的关键词。"
+
+    return {
+        "datasets": results[:15],
+        "recommendation": recommendation,
+        "target_count": target_count,
+    }
+
+
 if __name__ == "__main__":
     # Test with examples
     examples = [

@@ -121,17 +121,39 @@ def page_data():
             )
             upload = gr.File(label="或上传文件", file_types=[".json", ".jsonl", ".csv"], scale=2)
 
-        # AI生成
+        # AI生成 — 三个路径
         gr.Markdown('<div class="section-title">AI 生成</div>')
-        with gr.Row():
-            examples_input = gr.Textbox(
-                placeholder="写几个问答示例...\n问：你好\n答：你好！有什么可以帮你的？",
-                lines=4, label="示例", scale=3,
-            )
-            gen_count = gr.Number(value=100, label="生成数量", precision=0, scale=1)
-            gen_btn = gr.Button("生成", size="sm", scale=1)
 
-        gen_log = gr.Textbox(label="生成日志", lines=2, interactive=False)
+        with gr.Tabs():
+            # 路径 A: 少样本扩充
+            with gr.Tab("少样本扩充"):
+                with gr.Row():
+                    examples_input = gr.Textbox(
+                        placeholder="写几个问答示例...\n问：你好\n答：你好！有什么可以帮你的？",
+                        lines=4, label="示例", scale=3,
+                    )
+                    gen_count = gr.Number(value=100, label="生成数量", precision=0, scale=1)
+                    gen_btn = gr.Button("生成", size="sm", scale=1)
+
+            # 路径 B: 文档→问答
+            with gr.Tab("文档生成"):
+                doc_input = gr.Textbox(
+                    placeholder="粘贴文档内容...支持 TXT/Markdown/PDF文本",
+                    lines=6, label="文档内容", scale=3,
+                )
+                with gr.Row():
+                    doc_count = gr.Number(value=50, label="生成数量", precision=0, scale=1)
+                    doc_btn = gr.Button("从文档生成", size="sm", scale=1)
+
+            # 路径 C: 自然语言搜索
+            with gr.Tab("搜索数据集"):
+                desc_input = gr.Textbox(
+                    placeholder="描述你想要的数据：比如'中文客服对话数据，要有礼貌用语，约5000条'",
+                    lines=2, label="需求描述",
+                )
+                desc_btn = gr.Button("搜索", size="sm")
+
+        gen_log = gr.Textbox(label="生成日志", lines=3, interactive=False)
 
         # 处理
         gr.Markdown('<div class="section-title">处理 & 预览</div>')
@@ -197,6 +219,28 @@ def page_data():
         split_btn.click(do_split, [state], [preview_box, status_box, state])
         save_btn.click(do_save, [state], [preview_box, status_box, state])
         gen_btn.click(do_generate, [examples_input, gen_count], [preview_box, gen_log])
+
+        def do_doc_generate(doc, count):
+            if not doc.strip(): return None, "请粘贴文档内容"
+            if not is_ollama_available(): return None, "Ollama 不可用"
+            from backend.data_generator import generate_from_document
+            result = generate_from_document(doc, int(count), backend="ollama")
+            if result.success:
+                return None, f"✅ 从文档生成了 {result.count} 条问答"
+            return None, f"❌ {result.error}"
+
+        def do_desc_search(desc):
+            if not desc.strip(): return None, "请输入需求描述"
+            from backend.data_generator import search_datasets_by_description
+            result = search_datasets_by_description(desc)
+            datasets = result.get("datasets", [])
+            if datasets:
+                lines = [f"找到 {len(datasets)} 个数据集:"] + [f"  · {d['name']} ({d['source']})" for d in datasets[:8]]
+                return None, "\n".join(lines)
+            return None, result.get("recommendation", "未找到")
+
+        doc_btn.click(do_doc_generate, [doc_input, doc_count], [preview_box, gen_log])
+        desc_btn.click(do_desc_search, [desc_input], [preview_box, gen_log])
 
 
 # ============================================================
