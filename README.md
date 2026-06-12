@@ -2,6 +2,7 @@
 
 [![Test](https://github.com/ZBcxy/-model-training-room/actions/workflows/test.yml/badge.svg)](https://github.com/ZBcxy/-model-training-room/actions)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![PyPI](https://img.shields.io/pypi/v/model-training-room)](https://pypi.org/project/model-training-room/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Models](https://img.shields.io/badge/models-26-orange)](backend/model_cards.py)
 
@@ -69,9 +70,12 @@ It provides a graphical interface for:
 ## Quick Start
 
 ```bash
-# 1. Clone the repository
-git clone <repo-url>
-cd "Model Training Room"
+# 一行安装
+pip install model-training-room
+
+# 或从源码
+git clone https://github.com/ZBcxy/-model-training-room.git
+cd model-training-room
 
 # 2. Create virtual environment
 python3 -m venv .venv
