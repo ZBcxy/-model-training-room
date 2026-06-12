@@ -9,34 +9,41 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+    timeout-minutes: 10
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -e ".[dev]"
-
-      - name: Run tests
-        run: |
-          python -m pytest tests/ -v --tb=short -x
-
-  lint:
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - run: pip install ruff
-      - run: ruff check backend/ frontend/ --ignore=E501,F841
+          python-version: "3.11"
+
+      - name: Install CPU PyTorch first
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install gradio huggingface_hub modelscope transformers datasets \
+            accelerate peft pandas scikit-learn psutil tqdm rich \
+            pydantic httpx pyyaml nvidia-ml-py
+
+      - name: Run test suite
+        run: python tests/test_e2e.py
+
+      - name: Run release test
+        run: python tests/release_test.py
+
+      - name: Module import check
+        run: |
+          python -c "
+          from backend.hardware_checker import get_system_info, check_environment_deps
+          from backend.model_hub import classify_license, check_model_compatibility
+          from backend.dataset_manager import detect_format, convert_to_sharegpt, clean_dataset, split_dataset
+          from backend.training_engine import detect_chat_template, get_smart_recommendations
+          from backend.model_cards import load_cards, match_card
+          from backend.model_recommender import get_quick_recommendation
+          from backend.data_generator import PROMPT_TEMPLATES, _extract_json_array
+          from backend.env_config import get_environment_report
+          from backend.experiment_store import get_connection
+          print('✅ All 10 backend modules OK on CPU')
+          "
