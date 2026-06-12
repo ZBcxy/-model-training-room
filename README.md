@@ -77,6 +77,17 @@ python -m frontend.app
 # Open http://127.0.0.1:7860 in your browser
 ```
 
+### Docker 一键部署
+
+```bash
+# 构建并启动 (需要 NVIDIA GPU + nvidia-docker)
+docker compose up -d
+
+# 浏览器打开 http://127.0.0.1:7860
+```
+
+不需要手动安装 Python、CUDA、依赖。镜像自动包含一切。
+
 ## Project Structure
 
 ```
@@ -257,6 +268,17 @@ cd LLaMA-Factory && pip install -e . && cd ..
 python -m frontend.app
 # 浏览器打开 http://127.0.0.1:7860
 ```
+
+### Docker 一键部署
+
+```bash
+# 构建并启动（需要 NVIDIA GPU + nvidia-docker）
+docker compose up -d
+
+# 浏览器打开 http://127.0.0.1:7860
+```
+
+无需手动装 Python、CUDA、依赖，镜像全包。
 
 ## 项目结构
 
